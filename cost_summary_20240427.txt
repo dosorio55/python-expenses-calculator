@@ -1,0 +1,23 @@
+ELECTRICIDAD
+TODOS PAGA: 32.71
+DIEGO PAGA: 37.54
+GONZALO PAGA: 26.81
+JOSE PAGA: 5.9
+=====================================
+GAS
+TODOS PAGA: 15.07
+DIEGO PAGA: 17.33
+GONZALO PAGA: 12.05
+JOSE PAGA: 3.01
+=====================================
+SERVICIOS
+TODOS PAGA: 8.58
+DIEGO PAGA: 8.58
+GONZALO PAGA: 8.58
+JOSE PAGA: 0.0
+=====================================
+=====================================
+TODOS PAGA: 56.36
+DIEGO PAGA: 63.45
+GONZALO PAGA: 47.45
+JOSE PAGA: 8.91
