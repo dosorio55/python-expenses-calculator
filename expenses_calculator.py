@@ -20,10 +20,12 @@ def calculate_all_overlap_days(start_date, end_date, difference):
 
 def calculate_guest_cost(amenity_cost, total_days_sum, amenity):
     for guest in guests.values():
+        guest["amenities_expenses"] = {}
         guest["amenities_expenses"][amenity] = (
             guest["overlap_days"] * amenity_cost) / total_days_sum
 
     for external in externals.values():
+        external["amenities_expenses"] = {}
         external["amenities_expenses"][amenity] = (
             external["overlap_days"] * amenity_cost) / total_days_sum
 

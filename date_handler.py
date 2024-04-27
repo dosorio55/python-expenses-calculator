@@ -11,11 +11,16 @@ def getStartAndEndDate():
     print("The start date is: ", start_date)
 
     end_day = input("Enter the end day: ")
-    end_month = input("Enter the end month: ")
-    end_year = input("Enter the end year (default 2024): ") or "2024"
 
-    end_date = datetime.strptime(
-        f"{end_day}/{end_month}/{end_year}", "%d/%m/%Y")
+    if end_day == "":
+        end_date = datetime.strptime("31/12/3000", "%d/%m/%Y")
+    else:
+        end_month = input("Enter the end month: ")
+        end_year = input("Enter the end year (default 2024): ") or "2024"
+        end_date = datetime.strptime(
+            f"{end_day}/{end_month}/{end_year}", "%d/%m/%Y")
+    
+    print("The end date is: ", end_date)
     
     return start_date, end_date
 
