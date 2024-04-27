@@ -15,7 +15,7 @@ def calculate_all_overlap_days(start_date, end_date, difference):
             external, start_date, end_date)
         total_external_stay_days += external["overlap_days"]
 
-    return (people_in_the_house * difference) + total_guest_stay_days + total_external_stay_days
+    return (people_in_the_house["ammount"] * difference) + total_guest_stay_days + total_external_stay_days
 
 
 def calculate_guest_cost(amenity_cost, total_days_sum, amenity):

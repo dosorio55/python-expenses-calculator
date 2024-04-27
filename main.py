@@ -1,8 +1,7 @@
 from datetime import datetime
 from date_handler import getStartAndEndDate
 from expenses_calculator import calculateExpenses
-from globals import cost_summaries, people_in_the_house, guests, externals
-
+from globals import cost_summaries, guests, externals, people_in_the_house
 
 def finishingCalculation():
     TOTAL = {}
@@ -36,9 +35,7 @@ def finishingCalculation():
 
 
 def changeConfiguration():
-    global people_in_the_house
-
-    people_in_the_house = int(
+    people_in_the_house["ammount"] = int(
         input("Enter the number of people in the house (default: 4): ") or 4)
     guests_number = int(input("Enter the number of guests (default: 1): ") or 1)
 
@@ -66,12 +63,14 @@ def changeConfiguration():
 
 
 def main():
+    global people_in_the_house
+
     AMMENITIES = []
 
-    change_configuration = input(f'''calculating the expenses for {people_in_the_house} + 1 guest assigned to Diego\n
+    change_configuration = input(f'''calculating the expenses for {people_in_the_house["ammount"]} + 1 guest assigned to Diego\n
           Do you want to change the configuration? (y/n): ''')
 
-    if change_configuration == "y":
+    if change_configuration == "y" or change_configuration == "Y":
         changeConfiguration()
 
     print("=====================================")
