@@ -21,6 +21,8 @@ def getStartAndEndDate():
             f"{end_day}/{end_month}/{end_year}", "%d/%m/%Y")
     
     print("The end date is: ", end_date)
+
+    print("=====================================")
     
     return start_date, end_date
 

@@ -5,46 +5,34 @@ from globals import cost_summaries, people_in_the_house, guests, externals
 
 
 def finishingCalculation():
-    TOTAL = {"single_host_cost": 0, "guest_cost": 0}
+    TOTAL = {}
 
     time_now_code = datetime.now().strftime("%Y%m%d")
 
     with open(f"cost_summary_{time_now_code}.txt", "w") as file:
         for key, value in cost_summaries.items():
-            TOTAL["single_host_cost"] += value["single_host_cost"]
-            TOTAL["guest_cost"] += value["guest_cost"]
-
-            rounded_host_cost = round(value["single_host_cost"], 2)
-            rounded_guest_cost = round(value["guest_cost"], 2)
-
             print(key.upper())
-            print("COST HOST: ", str(rounded_host_cost))
-            print("GUEST: " + str(rounded_guest_cost))
-
-            print("=====================================")
-
             file.write(key.upper() + "\n")
-            file.write("COST HOST: " + str(rounded_host_cost) + "\n")
-            file.write("GUEST: " + str(rounded_guest_cost) + "\n")
+
+            for person in value:
+                value_to_pay = value[person] if person not in guests else value['Todos'] + guests[person]["amenities_expenses"][key]
+
+                print(f"{person.upper()} PAGA: {round(value_to_pay, 2)}")
+                file.write(f"{person.upper()} PAGA: {round(value_to_pay, 2)}\n")
+
+                TOTAL[person] = TOTAL.get(person, 0) + value_to_pay
+                
             file.write("=====================================\n")
-
-        print("TOTAL COST HOST: ", round(TOTAL["single_host_cost"], 2))
-        print("TOTAL GUEST: ", round(TOTAL["guest_cost"], 2))
+            print("=====================================")
+            
         print("=====================================")
+        file.write("=====================================\n")
+        
+        for person, valueToPay in TOTAL.items():
+            print(f"{person.upper()} PAGA: {round(valueToPay, 2)}")
+            file.write(f"{person.upper()} PAGA: {round(valueToPay, 2)}\n")
+        
 
-        print(
-            f"TOTAL HOST+GUEST: {round(TOTAL['single_host_cost'] + TOTAL['guest_cost'], 2)}")
-        print(
-            f"Total COST: {round(TOTAL['single_host_cost'] * people_in_the_house + TOTAL['guest_cost'], 2)}")
-
-        file.write("TOTAL COST HOST: " +
-                   str(round(TOTAL["single_host_cost"], 2)) + "\n")
-        file.write(
-            f"TOTAL HOST+GUEST: {round(TOTAL['single_host_cost'] + TOTAL['guest_cost'], 2)}\n")
-        file.write("TOTAL GUEST: " + str(round(TOTAL["guest_cost"], 2)) + "\n")
-
-        file.write(
-            f"Total COST: {round(TOTAL['single_host_cost'] * people_in_the_house + TOTAL['guest_cost'], 2)}")
 
 
 def changeConfiguration():
@@ -58,7 +46,7 @@ def changeConfiguration():
         guest_name = input(
             f"Enter the name of the person in charge of the guest (default: Diego): ") or "Diego"
         
-        guests[guest_name] = {"start_date": None, "end_date": None}
+        guests[guest_name] = {"start_date": None, "end_date": None, "overlap_days": 0, "amenities_expenses": {}}
 
         start_date, end_date = getStartAndEndDate()
 
@@ -69,7 +57,7 @@ def changeConfiguration():
 
     for _ in range(externals_number):
         external_name = input(f"Enter the name of the external: ")
-        externals[external_name] = {"start_date": None, "end_date": None}
+        externals[external_name] = {"start_date": None, "end_date": None, "overlap_days": 0, "amenities_expenses": {}}
 
         start_date, end_date = getStartAndEndDate()
 
@@ -85,6 +73,8 @@ def main():
 
     if change_configuration == "y":
         changeConfiguration()
+
+    print("=====================================")
 
     while True:
         amenity = input("Enter the name of the expense: ")
